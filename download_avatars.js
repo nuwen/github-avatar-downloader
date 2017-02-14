@@ -8,6 +8,8 @@ var FILE_PATH = "./avatars/sdjkfsdjk.jpg";
 var loginData = [];
 var avatarURL = [];
 
+
+
 function downloadImageByUrl(url, filePath){
   console.log("IMAGE RAN");
   request.get(url).pipe(fs.createWriteStream(filePath));
@@ -15,6 +17,10 @@ function downloadImageByUrl(url, filePath){
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  if(!repoOwner) {
+    console.log("Invalid input!");
+    return;
+  }
 
   var requestURL = {
     url: 'https://' + GITHUB_USER + ':' + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
@@ -37,6 +43,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 
 getRepoContributors(args[0], args[1], function(err, response, body) {
+
   var data = JSON.parse(body);
   for(var i = 0; i < data.length; i++){
     var avatarURL = (data[i]['avatar_url']);
