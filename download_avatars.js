@@ -14,26 +14,25 @@ function getRepoContributors(repoOwner, repoName, cb) {
       'User-Agent': 'GitHub Avatar Downloader - Student Project'
     }
   };
+
   request.get(requestURL)
          .on('error', function(err) {
            console.log("ERROR");
          })
          .on('response', function(response) {
-           console.log("STATUS ERROR: " + response.body);
-         })
-         .on('data', function(data) {
-           console.log(data);
+           console.log("STATUS CODE: " + response.statusCode);
          });
 
-    // console.log(requestURL);
-    // console.log(body);
+  request(requestURL, cb);
 }
 
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("errors:", err);
-  console.log("reults:", result);
+getRepoContributors("jquery", "jquery", function(err, response, body) {
+  var data = JSON.parse(body);
+  for(var i = 0; i < data.length; i++){
+    console.log(data[i]['login']);
+  }
 });
 
 //
